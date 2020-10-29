@@ -33,7 +33,7 @@ namespace WebAPISample.Controllers
         {
             // Retrieve movie by id from db logic
             // return Ok(movie);
-            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
+            var movie = _context.Movies.Where(m => m.MovieId == id).SingleOrDefault();
             return Ok(movie);
         }
 
@@ -62,7 +62,7 @@ namespace WebAPISample.Controllers
         public IActionResult Delete(int id)
         {
             // Delete movie from db logic
-            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
+            var movie = _context.Movies.Where(m => m.MovieId == id).SingleOrDefault();
             _context.Remove(movie);
             _context.SaveChanges();
             return Ok();
