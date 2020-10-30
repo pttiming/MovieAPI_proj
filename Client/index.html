@@ -3,13 +3,10 @@
 <head>
     <title>jQuery AJAX POST Form</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
-
-    <div id="response">
-        <pre></pre>
-    </div>
-    
+        
     <form id="my-form-create">
         <input type="text" name="title" placeholder="Title" />
         <input type="text" name="director" placeholder="Director" />
@@ -30,13 +27,18 @@
         <button type="submit">Delete Movie</button>
     </form>
 
-    <form id="my-form-delete">
-        <button type="submit">Delete Movie</button>
-    </form>
-    
     <form id="my-form-update">
         <button type="submit">Update</button>
     </form>
+
+    <div id="response">
+        <pre></pre>
+    </div>
+
+    <!-- <div class="topnav">
+        <a class="active" href="home">Home</a>
+        <a href="getAll"
+    </div> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./app.js"></script>

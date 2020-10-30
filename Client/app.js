@@ -15,7 +15,7 @@ function getAllMovies() {
         }
     });
 
-    e.preventDefault();
+    //e.preventDefault();
 }
 
 (function($){
