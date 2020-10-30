@@ -9,9 +9,14 @@ $('#my-form-create').submit(addMovie);
 $('#my-form-update').submit(updateMovie);
 $('#my-form-delete').submit(deleteMovie);
 
+$("#allMoviesTable .details").submit(console.log("Details Button Click Successful"));
+$("#allMoviesTable .edit").submit(console.log("Edit Button Click Successful"));
+$("#allMoviesTable .delete").submit(console.log("Delete Button Click Successful"));
+
 // API Calls
 
 // Load all movies into table (GET all copy)
+
 function viewAllMovies() {
     $.ajax({
         url: 'https://localhost:44325/api/movie',
@@ -24,13 +29,13 @@ function viewAllMovies() {
                     `<tr>
                         <td>${value.title}</td>
                         <td>
-                            <button type="submit">Details</button>
-                            <button>Edit</button>
-                            <button>Delete</button>
+                            <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
+                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
+                            <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
                         </td>
                     </tr>`
-                )
-            })
+                );
+            });
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
@@ -38,7 +43,12 @@ function viewAllMovies() {
     });
 }
 
+function showInConsole(movieId){
+    console.log(movieId);
+}
+
 // GET - Get all movies
+
 function getAllMovies( e ){
     $.ajax({
         url: 'https://localhost:44325/api/movie',
@@ -53,13 +63,12 @@ function getAllMovies( e ){
             console.log( errorThrown );
         }
     });
-
     e.preventDefault();
 }
 
+
 // GET - Get single movie
-function getSingleMovie( e ){
-    var id = 2;
+function getSingleMovie(id){
     $.ajax({
         url: 'https://localhost:44325/api/movie/' + id,
         dataType: 'json',
@@ -73,8 +82,6 @@ function getSingleMovie( e ){
             console.log( errorThrown );
         }
     });
-
-    e.preventDefault();
 }
 
 //Post - Add movie
@@ -131,8 +138,7 @@ function updateMovie( e ){
 }
 
 // DELETE
-function deleteMovie( e ){
-    var id = 12;
+function deleteMovie(id){
     $.ajax({
         url: 'https://localhost:44325/api/movie/' + id,
         dataType: 'json',
@@ -146,6 +152,4 @@ function deleteMovie( e ){
             console.log( errorThrown );
         }
     });
-
-    e.preventDefault();
 }
