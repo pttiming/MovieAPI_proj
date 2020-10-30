@@ -23,6 +23,6 @@ body{
     float: left;
     display: inline;    
 }
-#response{
-    padding: 150px;
+#allMoviesTable{
+    margin-top: 60px;
 }
