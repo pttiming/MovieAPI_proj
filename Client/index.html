@@ -6,7 +6,19 @@
     <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
-        
+
+    <div id="response">
+        <pre></pre>
+    </div>
+
+    <table id ="allMoviesTable" style="border: solid">
+        <tr>
+            <th>Title</th>
+            <th>Action</th>
+        </tr>
+    </table>
+    <button>Add Movie</button>
+    
     <form id="my-form-create">
         <input type="text" name="title" placeholder="Title" />
         <input type="text" name="director" placeholder="Director" />
@@ -26,14 +38,10 @@
     <form id="my-form-delete">
         <button type="submit">Delete Movie</button>
     </form>
-
+    
     <form id="my-form-update">
         <button type="submit">Update</button>
     </form>
-
-    <div id="response">
-        <pre></pre>
-    </div>
 
     <!-- <div class="topnav">
         <a class="active" href="home">Home</a>
