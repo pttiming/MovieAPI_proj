@@ -1,4 +1,23 @@
-// POST - Create new movie, add to database
+// Get all movies on load
+$(document).ready(getAllMovies());
+
+function getAllMovies() {
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function( data, textStatus, jQxhr ){
+            $('#response pre').html( JSON.stringify(data) );
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+
+    e.preventDefault();
+}
+
 (function($){
     function processForm( e ){
         var dict = {
@@ -105,6 +124,7 @@
             Director: "Brandon Prange",
             Genre: "Action"
         };
+
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',
@@ -112,8 +132,7 @@
             contentType: 'application/json',
             data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
-                $('#response pre').html( textStatus );
-                console.log( textStatus );
+                $('#response pre').html( "Movie Updated" );
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
