@@ -9,10 +9,6 @@ $('#my-form-create').submit(addMovie);
 $('#my-form-update').submit(updateMovie);
 $('#my-form-delete').submit(deleteMovie);
 
-$("#allMoviesTable .details").submit(console.log("Details Button Click Successful"));
-$("#allMoviesTable .edit").submit(console.log("Edit Button Click Successful"));
-$("#allMoviesTable .delete").submit(console.log("Delete Button Click Successful"));
-
 // API Calls
 
 // Load all movies into table (GET all copy)
