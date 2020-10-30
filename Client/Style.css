@@ -1,0 +1,28 @@
+body{
+    background-image: url("Pictures/white-cinema-theatre-screen-with-red-curtains-and-vector-19061156.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+#my-form-create{
+    float: right;
+    display: inline;    
+}
+#my-form-getAll{
+    float: left;
+    display: inline;    
+}
+#my-form-getSingle{
+    float: left;
+    display: inline;    
+}
+#my-form-delete{
+    float: left;
+    display: inline;    
+}
+#my-form-update{
+    float: left;
+    display: inline;    
+}
+#response{
+    padding: 150px;
+}
