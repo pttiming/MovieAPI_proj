@@ -23,11 +23,12 @@ function viewAllMovies() {
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
                     `<tr>
+                        <td><image src="${value.image}" style="width: 50px"></td>
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
-                            <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
+                            <button class="delete" onclick="showInConsole(${value.movieId})">Delete</button>
                         </td>
                     </tr>`
                 );
@@ -40,7 +41,7 @@ function viewAllMovies() {
 }
 
 function showInConsole(movieId){
-    console.log(movieId);
+    console.log("Delete movie: " + movieId);
 }
 
 // GET - Get all movies

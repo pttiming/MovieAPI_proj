@@ -2,6 +2,7 @@ body{
     background-image: url("Pictures/white-cinema-theatre-screen-with-red-curtains-and-vector-19061156.jpg");
     background-size: cover;
     background-attachment: fixed;
+    background-position: center top;
 }
 #my-form-create{
     float: right;
