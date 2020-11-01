@@ -1,11 +1,12 @@
-body{
-    background-image: url("Pictures/white-cinema-theatre-screen-with-red-curtains-and-vector-19061156.jpg");
-    background-size: cover;
+body {
+    background-image: url(images/cinema2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center top;
-}
+    background-size: cover;
+    background-color: #464646;
+  }
 #my-form-create{
-    float: right;
     display: inline;    
 }
 #my-form-getAll{
@@ -25,5 +26,5 @@ body{
     display: inline;    
 }
 #allMoviesTable{
-    margin-top: 60px;
+    margin-top: 100px;
 }
