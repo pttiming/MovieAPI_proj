@@ -5,6 +5,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-color: #464646;
+    background-position: center top;
   }
 #my-form-create{
     display: inline;    
@@ -27,4 +28,21 @@ body {
 }
 #allMoviesTable{
     margin-top: 100px;
+}
+#myCarousel {
+    width:80%;
+    margin:auto;
+}
+.carousel-item {
+    height:32rem;
+    background:#777;
+    color: white;
+    position: relative;
+}
+.container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 50px;
 }
