@@ -53,9 +53,7 @@ function viewAllMovies() {
             $("#response").html(
                 `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
                 <tr>
-                    <th></th>
-                    <th>Title</th>
-                    <th>Action</th>
+                    
                 </tr>`
             )
             $.each(data, function(key, value){
@@ -324,12 +322,8 @@ function processSearch(attribute, event){
             })
             $("#response").empty();
             $("#response").html(
-                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Action</th>
-        </tr>`
+                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >`
+        
             )
             $.each(searchResults, function(key, value){
                 $("#allMoviesTable").append(
