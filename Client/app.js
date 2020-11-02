@@ -96,7 +96,7 @@ function viewAllMovies() {
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
-                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
+                            <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
                             <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
                         </td>
                     </tr>
@@ -175,7 +175,8 @@ function addMovie( e ){
     var dict = {
         Title : document.forms.my["title"].value,
         Director: document.forms.my["director"].value,
-        Genre: document.forms.my["genre"].value
+        Genre: document.forms.my["genre"].value,
+        Image: document.forms.my["image"].value
     };
 
     $.ajax({
@@ -199,14 +200,15 @@ function addMovie( e ){
 // PUT - Update movie
 function updateMovie( e ){
     var dict = {
-        MovieId : 5,
-        Title : "Die Hard",
-        Director: "Brandon Prange",
-        Genre: "Action"
+        MovieId : parseInt(document.forms.myUpdateForm.MovieId.value),
+        Title : document.forms.myUpdateForm.Title.value,
+        Director: document.forms.myUpdateForm.Director.value,
+        Genre: document.forms.myUpdateForm.Genre.value,
+        Image: document.forms.myUpdateForm.Image.value
     };
 
     $.ajax({
-        url: 'https://localhost:44325/api/movie',
+        url: 'https://localhost:44325/api/movie' ,
         dataType: 'json',
         type: 'put',
         contentType: 'application/json',
@@ -252,6 +254,7 @@ function newMovie(){
         <input type="text" name="title" placeholder="Title" />
         <input type="text" name="director" placeholder="Director" />
         <input type="text" name="genre" placeholder="Genre" />
+        <input type="url" name="image" placeholder="Image URL" />
         
         <button type="submit" onclick="addMovie()">Create</button>
     </form>
@@ -292,3 +295,36 @@ function queueCarousel(){
     )
     populateCarousel();
 }
+
+function getMovieToEdit(id){
+    $.ajax({
+        url: 'https://localhost:44325/api/movie/' + id,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function( data, textStatus, jQxhr ){
+            console.log(data);
+            var image = data.image;
+            if(image == null){image = "./images/default.png"};
+            //$('#response pre').html( JSON.stringify(data) );
+            $("#response").empty();
+            $("#response").html(
+                `<div><form id="myUpdateForm">
+                        <input type="hidden" name="MovieId" value="${id}">
+                        <input type="text" name="Title" value="${data.title}" />
+                        <input type="text" name="Director" value="${data.director}" />
+                        <input type="text" name="Genre" value="${data.genre}" />
+                        <input type="url" name="Image" value="${data.image}" />
+                        
+                        <button type="submit" onclick="updateMovie()">Update</button>
+                    </form>
+                </div>`
+            )
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+}
+
+
