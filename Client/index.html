@@ -16,7 +16,7 @@
   
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" onclick="homeClick()">Home
             <span class="sr-only">(current)</span>
           </a>
@@ -30,9 +30,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Search by</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Title</a>
-            <a class="dropdown-item" href="#">Director</a>
-            <a class="dropdown-item" href="#">Genre</a>
+            <a class="dropdown-item" onclick="filterMovieBy('title')" href="#">Title</a>
+            <a class="dropdown-item" onclick="filterMovieBy('director')" href="#">Director</a>
+            <a class="dropdown-item" onclick="filterMovieBy('genre')" href="#">Genre</a>
           </div>
         </li>
       </ul>
@@ -43,6 +43,8 @@
     </div>
   </nav> 
   
+  <!--Container for all UI-->
+  <div id="response" class="col-md-8 offset-md-2"></div>
 
   <!--<div>
     <form id="my-form-create">
@@ -53,8 +55,6 @@
       <button type="submit">Create</button>
     </form>
   </div>-->
-
-  <div style="margin-left:auto;margin-right:auto;" id="response" class="col-md-8 offset-md-2"></div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
