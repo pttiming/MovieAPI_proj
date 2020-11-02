@@ -337,7 +337,7 @@ function processSearch(attribute){
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
-                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
+                            <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
                             <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
                         </td>
                     </tr>
