@@ -292,7 +292,7 @@ function processSearch(attribute, event){
         success: function( data, textStatus, jQxhr ){
             let searchValue = document.forms.Search.search.value;
             let searchResults = data.filter(function(el){
-            if(el[`${attribute}`] == searchValue){
+            if(el[`${attribute}*`] == searchValue){
                 return true;  
             }
             else{
@@ -337,6 +337,6 @@ $('.dropdown-item').on('click', function(){
     $('.navbar-collapse').collapse('hide');
 });
 
-$('.nav-link').on('click', function(){
+$('.nav-link').not("#navdrop").on('click', function(){
     $('.navbar-collapse').collapse('hide');
 });
