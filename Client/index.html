@@ -17,18 +17,18 @@
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" onclick="homeClick()">Home
+          <a class="nav-link" onclick="homeClick(event)">Home
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="viewAllMovies()">View All Movies</a>
+          <a class="nav-link" onclick="viewAllMovies(event)">View All Movies</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="newMovie()">Add a Movie</a>
+          <a class="nav-link" onclick="newMovie(event)">Add a Movie</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Search by</a>
+          <a class="nav-link dropdown-toggle" id="navdrop" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Search by</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" onclick="filterMovieBy('title')" href="#">Title</a>
             <a class="dropdown-item" onclick="filterMovieBy('director')" href="#">Director</a>

@@ -35,10 +35,10 @@ body {
     width:70%;
     height: 50%;
     margin:auto;
+    background-color: transparent;
 }
 .carousel-item {
     height:21rem;
-    background:#464646;
     color: white;
     position: relative;
 }
