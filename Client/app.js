@@ -337,6 +337,6 @@ $('.dropdown-item').on('click', function(){
     $('.navbar-collapse').collapse('hide');
 });
 
-//$('.nav-link').not("#navdrop").on('click', function(){
-//    $('.navbar-collapse').collapse('hide');
-//});
+$('.nav-link').not("#navdrop").on('click', function(){
+    $('.navbar-collapse').collapse('hide');
+});
