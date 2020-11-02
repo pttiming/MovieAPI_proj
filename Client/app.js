@@ -26,7 +26,7 @@ function populateCarousel() {
                 $(".carousel-inner").append(
                     `<div class="carousel-item">
                         <div class="container">
-                        <img src="${value.image}" height="200">
+                        <img src="${value.image}" height="200" onerror="this.src='./images/default.png'">
                             <h4>${value.title}</h4>
                             <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
                                 See Movie Details
