@@ -86,7 +86,9 @@ function viewAllMovies(e) {
             $("#response").html(
                 `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
                 <tr>
-                    
+                <th></th>
+                <th>Title</th>
+                <th>Action</th>
                 </tr>`
             )
 
@@ -303,8 +305,12 @@ function processSearch(attribute, event){
 
             // Load table sketelon
             $("#response").html(
-                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >`
-        
+                `<table class="tableResponse" class="table-striped table-primary table-hover" id ="allMoviesTable" >
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>`
             )
             $.each(searchResults, function(key, value){
                 $("#allMoviesTable").append(
