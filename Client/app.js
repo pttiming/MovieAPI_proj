@@ -292,3 +292,58 @@ function queueCarousel(){
     )
     populateCarousel();
 }
+function filterMovieBy(attribute){
+    $("#response").empty();
+    $("#response").append(
+        `<div><form name="Search">
+        <input type="text" name="search" placeholder="${attribute}" />
+        <button class="btn-primary" onclick="processSearch('${attribute}')" type="submit">search</button>
+        </form></div>`
+    )
+}
+
+function processSearch(attribute){
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function( data, textStatus, jQxhr ){
+            let searchValue = document.forms.Search.search.value;
+            let searchResults = data.filter(function(el){
+                if(el[`${attribute}`] == searchValue){
+                  return true;  
+            }
+             else{
+                 return false;
+             }
+            })
+            $("#response").empty();
+            $("#response").html(
+                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Action</th>
+        </tr>`
+            )
+            $.each(searchResults, function(key, value){
+                $("#allMoviesTable").append(
+                    `<tr class="table-striped table-dark table-hover">
+                        <td><image src="${value.image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
+                        <td>${value.title}</td>
+                        <td>
+                            <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
+                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
+                            <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
+                        </td>
+                    </tr>
+                    </table>`
+                );
+            });
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+}
