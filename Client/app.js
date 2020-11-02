@@ -66,7 +66,7 @@ function viewAllMovies() {
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
-                            <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
+                            
                         </td>
                     </tr>
                     </table>`
@@ -164,6 +164,7 @@ function addMovie( e ){
     });
 
     e.preventDefault();
+    queueCarousel();
 }
 
 // PUT - Update movie
@@ -225,7 +226,7 @@ function newMovie(){
         <input type="text" name="genre" placeholder="Genre" />
         <input type="url" name="image" placeholder="Image URL" />
         
-        <button type="submit" onclick="addMovie()">Create</button>
+        <button type="submit" onclick="addMovie(event)">Create</button>
     </form>
 </div>`
     )
@@ -283,9 +284,9 @@ function getMovieToEdit(id){
                         <input type="text" name="Title" value="${data.title}" />
                         <input type="text" name="Director" value="${data.director}" />
                         <input type="text" name="Genre" value="${data.genre}" />
-                        <input type="url" name="Image" value="${data.image}" />
+                        <input type="text" name="Image" value="${data.image}" />
                         
-                        <button type="submit" onclick="updateMovie()">Update</button>
+                        <button type="submit" onclick="updateMovie(event)">Update</button>
                     </form>
                 </div>`
             )
@@ -300,12 +301,12 @@ function filterMovieBy(attribute){
     $("#response").append(
         `<div><form name="Search">
         <input type="text" name="search" placeholder="${attribute}" />
-        <button class="btn-primary" onclick="processSearch('${attribute}')" type="submit">search</button>
+        <button class="btn-primary" onclick="processSearch('${attribute}', event)" type="submit">search</button>
         </form></div>`
     )
 }
 
-function processSearch(attribute){
+function processSearch(attribute, event){
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
@@ -337,8 +338,7 @@ function processSearch(attribute){
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
-                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
-                            <button class="delete" onclick="deleteMovie(${value.movieId})">Delete</button>
+                            <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
                         </td>
                     </tr>
                     </table>`
@@ -349,4 +349,5 @@ function processSearch(attribute){
             console.log( errorThrown );
         }
     });
+    event.preventDefault();
 }
