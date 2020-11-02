@@ -1,5 +1,5 @@
 // Get all movies on load
-//$(document).ready(viewAllMovies());
+$(document).ready(queueCarousel());
 
 // Button click events
 
@@ -12,7 +12,66 @@ $('#my-form-create').submit(addMovie);
 
 // API Calls
 
-// Load all movies into table (GET all copy)
+function populateCarousel() {
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function( data, textStatus, jQxhr ){
+            $.each(data, function(index, value){
+                if ($({index}) == 0){
+                    $("#myCarousel .carousel-indicators").append(
+                        `<li data-target="#myCarousel" data-slide-to="${index}" class="active"></li>`
+                    );
+                    $(".carousel-inner").append(
+                        `<div class="carousel-item active">
+                            <div class="container">
+                                <img src="${value.image}" height="200">
+                                <h4>${value.title}</h4>
+                                <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
+                                    Edit something about movie
+                                </a>
+                            </div>
+                        </div>`
+                    );
+                } else {
+                    $("#myCarousel .carousel-indicators").append(
+                    `<li data-target="#myCarousel" data-slide-to="${index+1}"></li>`
+                    );
+                    $(".carousel-inner").append(
+                        `<div class="carousel-item">
+                            <div class="container">
+                            <img src="${value.image}" height="200">
+                                <h4>${value.title}</h4>
+                                <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
+                                    See Movie Details
+                                </a>
+                            </div>
+                        </div>`
+                    );
+                }
+                /*
+                $("#allMoviesTable").append(
+                    
+                    `<tr>
+                        <td><image src="${value.image}" style="width: 50px"></td>
+                        <td>${value.title}</td>
+                        <td>
+                            <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
+                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
+                            <button class="delete" onclick="showInConsole(${value.movieId})">Delete</button>
+                        </td>
+                    </tr>`
+                );
+                */
+            });
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+}
 
 function viewAllMovies() {
     $.ajax({
@@ -97,10 +156,10 @@ function getSingleMovie(id){
                 <th>Genre</th>
             </tr>
             <tr>
-                        <td><image src="${image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
-                        <td>${data.title}</td>
-                        <td>${data.director}</td>
-                        <td>${data.genre}</td>
+                <td><image src="${image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
+                <td>${data.title}</td>
+                <td>${data.director}</td>
+                <td>${data.genre}</td>
             </tr>
                 </table>`
             )
@@ -183,6 +242,7 @@ function deleteMovie(id){
 
 function homeClick(){
     $("#response").empty()
+    queueCarousel();
 }
 
 function newMovie(){
@@ -197,4 +257,38 @@ function newMovie(){
     </form>
 </div>`
     )
+}
+
+function queueCarousel(){
+    $("#response").empty();
+    $("#response").append(
+        `<!--Carousel-->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          
+          <!--Indicators (navigation dots), appended in app.js-->
+          <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          </ol>
+      
+          <!--Carousel Items, appended in app.js-->
+          <div class="carousel-inner">
+              <div class="carousel-item active">
+                  <div class="container">
+                      <h4>Welcome to Curtain Call</h4>
+                  </div>
+              </div>
+          </div>
+      
+          <!--Navigation buttons (left, right), hard coded-->
+          <a href="#myCarousel" class="carousel-control-prev" role="buton" data-slide="prev">
+              <span class="sr-only">Previous</span>
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </a>
+          <a href="#myCarousel" class="carousel-control-next" role="buton" data-slide="next">
+              <span class="sr-only">Previous</span>
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </a>
+        </div>`
+    )
+    populateCarousel();
 }
