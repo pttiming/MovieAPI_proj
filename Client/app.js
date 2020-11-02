@@ -20,52 +20,21 @@ function populateCarousel() {
         contentType: 'application/json',
         success: function( data, textStatus, jQxhr ){
             $.each(data, function(index, value){
-                if ($({index}) == 0){
-                    $("#myCarousel .carousel-indicators").append(
-                        `<li data-target="#myCarousel" data-slide-to="${index}" class="active"></li>`
-                    );
-                    $(".carousel-inner").append(
-                        `<div class="carousel-item active">
-                            <div class="container">
-                                <img src="${value.image}" height="200">
-                                <h4>${value.title}</h4>
-                                <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
-                                    Edit something about movie
-                                </a>
-                            </div>
-                        </div>`
-                    );
-                } else {
-                    $("#myCarousel .carousel-indicators").append(
-                    `<li data-target="#myCarousel" data-slide-to="${index+1}"></li>`
-                    );
-                    $(".carousel-inner").append(
-                        `<div class="carousel-item">
-                            <div class="container">
-                            <img src="${value.image}" height="200">
-                                <h4>${value.title}</h4>
-                                <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
-                                    See Movie Details
-                                </a>
-                            </div>
-                        </div>`
-                    );
-                }
-                /*
-                $("#allMoviesTable").append(
-                    
-                    `<tr>
-                        <td><image src="${value.image}" style="width: 50px"></td>
-                        <td>${value.title}</td>
-                        <td>
-                            <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
-                            <button class="edit" onclick="showInConsole(${value.movieId})">Edit</button>
-                            <button class="delete" onclick="showInConsole(${value.movieId})">Delete</button>
-                        </td>
-                    </tr>`
+                $("#myCarousel .carousel-indicators").append(
+                `<li data-target="#myCarousel" data-slide-to="${index+1}"></li>`
                 );
-                */
-            });
+                $(".carousel-inner").append(
+                    `<div class="carousel-item">
+                        <div class="container">
+                        <img src="${value.image}" height="200">
+                            <h4>${value.title}</h4>
+                            <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
+                                See Movie Details
+                            </a>
+                        </div>
+                    </div>`
+                );
+            })
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
@@ -83,16 +52,16 @@ function viewAllMovies() {
             $("#response").empty();
             $("#response").html(
                 `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Action</th>
-        </tr>`
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>`
             )
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
                     `<tr class="table-striped table-dark table-hover">
-                        <td><image src="${value.image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
+                        <td><image class="tableImage" src="${value.image}" onerror="this.src='./images/default.png'"></td>
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
@@ -148,7 +117,7 @@ function getSingleMovie(id){
             //$('#response pre').html( JSON.stringify(data) );
             $("#response").empty();
             $("#response").html(
-                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-dark table-hover" id ="singleMovieTable" >
+                `<table id="response" style="margin-left:auto;margin-right:auto;" class="table-striped table-dark table-hover" id ="singleMovieTable" >
             <tr>
                 <th></th>
                 <th>Title</th>
@@ -156,7 +125,7 @@ function getSingleMovie(id){
                 <th>Genre</th>
             </tr>
             <tr>
-                <td><image src="${image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
+                <td><image class="tableImage" src="${image}" onerror="this.src='./images/default.png'"></td>
                 <td>${data.title}</td>
                 <td>${data.director}</td>
                 <td>${data.genre}</td>
@@ -289,6 +258,6 @@ function queueCarousel(){
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
           </a>
         </div>`
-    )
+    );
     populateCarousel();
 }
