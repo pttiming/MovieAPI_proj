@@ -26,11 +26,8 @@ function populateCarousel() {
                 $(".carousel-inner").append(
                     `<div class="carousel-item">
                         <div class="container">
-                        <img src="${value.image}" height="200" onerror="this.src='./images/default.png'">
-                            <h4>${value.title}</h4>
-                            <a onclick="getSingleMovie(${value.movieId})" class="btn btn-lg btn-primary">
-                                See Movie Details
-                            </a>
+                        <img src="${value.image}" height="200" onerror="this.src='./images/default.png'" onclick="getSingleMovie(${value.movieId})">
+                            <h4 onclick="getSingleMovie(${value.movieId})">${value.title}</h4>
                         </div>
                     </div>`
                 );
@@ -42,7 +39,7 @@ function populateCarousel() {
     });
 }
 
-function viewAllMovies() {
+function viewAllMovies(e) {
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
@@ -66,7 +63,7 @@ function viewAllMovies() {
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
-                            
+                    
                         </td>
                     </tr>
                     </table>`
@@ -77,6 +74,7 @@ function viewAllMovies() {
             console.log( errorThrown );
         }
     });
+    e.preventDefault();
 }
 
 function showInConsole(movieId){
@@ -212,12 +210,13 @@ function deleteMovie(id){
     });
 }
 
-function homeClick(){
+function homeClick(e){
     $("#response").empty()
     queueCarousel();
+    e.preventDefault();
 }
 
-function newMovie(){
+function newMovie(e){
     $("#response").empty();
     $("#response").append(
         `<div><form name="my">
@@ -230,7 +229,9 @@ function newMovie(){
     </form>
 </div>`
     )
+    e.preventDefault();
 }
+
 
 function queueCarousel(){
     $("#response").empty();
@@ -351,3 +352,11 @@ function processSearch(attribute, event){
     });
     event.preventDefault();
 }
+
+$('.dropdown-item').on('click', function(){
+    $('.navbar-collapse').collapse('hide');
+});
+
+$('.nav-link').on('click', function(){
+    $('.navbar-collapse').collapse('hide');
+});
