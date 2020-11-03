@@ -97,14 +97,12 @@ function viewAllMovies(e) {
             // Populate table items
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
-                    `<tr class="table-striped table-dark table-hover">
-                        <td><image class="tableImage" src="${value.image}" onerror="this.src='./images/default.png'"></td>
+                    `   <tr><td><image class="tableImage" src="${value.image}" onerror="this.src='./images/default.png'"></td>
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
-                        </td>
-                    </tr>
+                        </td></tr>
                 </table>`
                 );
             });
@@ -114,6 +112,7 @@ function viewAllMovies(e) {
         }
     });
     e.preventDefault();
+    
 }
 
 function getSingleMovie(id){
@@ -136,17 +135,24 @@ function getSingleMovie(id){
                 `<table class="tableResponse" class="table-striped table-dark table-hover" id ="singleMovieTable" >
                     <tr>
                         <th></th>
-                        <th>Title</th>
-                        <th>Director</th>
-                        <th>Genre</th>
+                        <td><div><img src="${image}" onerror="this.src='./images/default.png'" width="150px"></td>
+                    <tr>
+                        <th>Title:  </th>
+                        <td>${data.title}</td>
                     </tr>
                     <tr>
-                        <td><image class="tableImage" src="${image}" onerror="this.src='./images/default.png'"></td>
-                        <td>${data.title}</td>
+                        <th>Director:  </th>
                         <td>${data.director}</td>
-                        <td>${data.genre}</td>
                     </tr>
-                </table>`
+                    <tr> 
+                        <th>Genre:  </th>
+                        <td>${data.genre}</td>
+                    </tr>  
+                    <tr> 
+                        <th></th>
+                        <td><button class="btn-primary" onclick="getMovieToEdit(${data.movieId})">Edit this Movie</button></td>
+                    </tr>  
+                </table></div>`
             )
         },
         error: function( jqXhr, textStatus, errorThrown ){
