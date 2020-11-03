@@ -82,12 +82,12 @@ function viewAllMovies(e) {
             
             // Load table skeleton
             $("#response").html(
-                `<table class="table-responsive-lg" id ="allMoviesTable" max-width="80%">
+                `<table class="table-responsive-lg" id ="allMoviesTable">
                     <tr>`
             );
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
-                    `<td onclick="getMovieToEdit(${value.movieId})">${value.title}</td>`
+                    `<td onclick="getSingleMovie(${value.movieId})" title="Click to See Movie Details">${value.title}</td>`
                 );
             });
             $("#allMoviesTable").append(
@@ -96,7 +96,7 @@ function viewAllMovies(e) {
             );
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
-                    `<td><image class="tableImage2" src="${value.image}" onerror="this.src='./images/default.png'" width="100px" onclick="getMovieToEdit(${value.movieId})"></td>`
+                    `<td><image class="tableImage2" src="${value.image}" title="Click to See Movie Details" onerror="this.src='./images/default.png'" width="100px" onclick="getSingleMovie(${value.movieId})"></td>`
                 );
             });
             $("#allMoviesTable").append(
@@ -179,6 +179,7 @@ function newMovie(e){
                 </div>
                 <div class="form-group">                
                 <button type="submit" class="btn-primary" onclick="addMovie(event)">Add Movie</button>
+                <button type="submit" class="btn-primary" onclick="homeClick(event)">Cancel</button>
                 </div>
             </div>
                 <div class="col-md-6">
@@ -231,6 +232,9 @@ function getMovieToEdit(id){
             var image = data.image;
             if(image == null){
                 image = "./images/default.png"
+            if(data.image == null){
+                data.image = "Image URL"
+            }
             };
             $("#response").empty();
             $("#response").html(
@@ -240,19 +244,24 @@ function getMovieToEdit(id){
             <div class="col-md-6">
             <div class="form-group">
                 <input type="hidden" name="MovieId" value="${id}">
+                <label for="title">Movie Title:</label><br>
                 <input type="text" name="title" value="${data.title}" />
                 </div>
                 <div class="form-group">
+                <label for="director">Director:</label><br>
                 <input type="text" name="director" value="${data.director}" />
                 </div>
                 <div class="form-group">
+                <label for="genre">Genre:</label><br>
                 <input type="text" name="genre" value="${data.genre}" />
                 </div>
                 <div class="form-group">
+                <label for="image">Movie Image URL:</label><br>
                 <input type="url" id="editmovieurl" name="image" value="${data.image}" onchange="updateImage(event)"/>
                 </div>
                 <div class="form-group">                
-                <button type="submit" class="btn-primary" onclick="addMovie(event)">Update Movie</button>
+                <button type="submit" class="btn-primary" onclick="updateMovie(event)">Update Movie</button>
+                <button type="submit" class="btn-primary" onclick="homeClick(event)">Cancel</button>
                 </div>
             </div>
                 <div class="col-md-6">
@@ -274,10 +283,10 @@ function getMovieToEdit(id){
 function updateMovie( e ){
     var dict = {
         MovieId : parseInt(document.forms.myUpdateForm.MovieId.value),
-        Title : document.forms.myUpdateForm.Title.value,
-        Director: document.forms.myUpdateForm.Director.value,
-        Genre: document.forms.myUpdateForm.Genre.value,
-        Image: document.forms.myUpdateForm.Image.value
+        Title : document.forms.myUpdateForm.title.value,
+        Director: document.forms.myUpdateForm.director.value,
+        Genre: document.forms.myUpdateForm.genre.value,
+        Image: document.forms.myUpdateForm.image.value
     };
     
     // Put movie API call
@@ -390,3 +399,11 @@ function updateImage(){
     let newImage = document.forms.myUpdateForm.image.value;
         $("#editmovieimg").attr("src", newImage);
 }
+
+function bigImg(x) {
+    x.style.width = "200px";
+  }
+
+  function normalImg(x) {
+    x.style.width = "100px";
+  }
