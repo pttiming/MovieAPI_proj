@@ -1,21 +1,19 @@
 // Build and populate carousel on page load
 $(document).ready(queueCarousel());
 
-// Button click events
-$('#my-form-create').submit(addMovie);
+function queueCarousel() {
 
-function queueCarousel(){
+    // Clear response div
     $("#response").empty();
+
+    // Build carousel skeleton
     $("#response").append(
-        `<!--Carousel-->
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        `<div id="myCarousel" class="carousel slide" data-ride="carousel">
           
-            <!--Indicators (navigation dots), appended in app.js-->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             </ol>
         
-            <!--Carousel Items-->
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="container">
@@ -24,7 +22,6 @@ function queueCarousel(){
                 </div>
             </div>
         
-            <!--Navigation buttons (left, right)-->
             <a href="#myCarousel" class="carousel-control-prev" role="buton" data-slide="prev">
                 <span class="sr-only">Previous</span>
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -48,12 +45,12 @@ function populateCarousel() {
         success: function( data, textStatus, jQxhr ){
             $.each(data, function(index, value){
 
-                // Load new navigation button
+                // Load new navigation buttons
                 $("#myCarousel .carousel-indicators").append(
                 `<li data-target="#myCarousel" data-slide-to="${index+1}"></li>`
                 );
 
-                //Load new carousel item
+                // Load new carousel items
                 $(".carousel-inner").append(
                     `<div class="carousel-item">
                         <div class="container">
@@ -71,6 +68,7 @@ function populateCarousel() {
 }
 
 function viewAllMovies(e) {
+    // Get All Movies API call
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
@@ -84,15 +82,15 @@ function viewAllMovies(e) {
             
             // Load table skeleton
             $("#response").html(
-                `<table style="margin-left:auto;margin-right:auto;" class="table-striped table-primary table-hover" id ="allMoviesTable" >
-                <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Action</th>
-                </tr>`
+                `<table class="tableResponse" class="table-striped table-primary table-hover" id ="allMoviesTable" >
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Action</th>
+                    </tr>`
             )
 
-            // Populate table with movies in database
+            // Populate table items
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
                     `<tr class="table-striped table-dark table-hover">
@@ -101,10 +99,9 @@ function viewAllMovies(e) {
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
-                    
                         </td>
                     </tr>
-                    </table>`
+                </table>`
                 );
             });
         },
@@ -133,18 +130,18 @@ function getSingleMovie(id){
             // Load table sketelon and data
             $("#response").html(
                 `<table class="tableResponse" class="table-striped table-dark table-hover" id ="singleMovieTable" >
-                <tr>
-                    <th></th>
-                    <th>Title</th>
-                    <th>Director</th>
-                    <th>Genre</th>
-                </tr>
-                <tr>
-                    <td><image class="tableImage" src="${image}" onerror="this.src='./images/default.png'"></td>
-                    <td>${data.title}</td>
-                    <td>${data.director}</td>
-                    <td>${data.genre}</td>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Genre</th>
+                    </tr>
+                    <tr>
+                        <td><image class="tableImage" src="${image}" onerror="this.src='./images/default.png'"></td>
+                        <td>${data.title}</td>
+                        <td>${data.director}</td>
+                        <td>${data.genre}</td>
+                    </tr>
                 </table>`
             )
         },
@@ -152,6 +149,22 @@ function getSingleMovie(id){
             console.log( errorThrown );
         }
     });
+}
+
+function newMovie(e){
+    $("#response").empty();
+    $("#response").append(
+        `<div><form name="my">
+                <input type="text" name="title" placeholder="Title" />
+                <input type="text" name="director" placeholder="Director" />
+                <input type="text" name="genre" placeholder="Genre" />
+                <input type="url" name="image" placeholder="Image URL" />
+                
+                <button type="submit" onclick="addMovie(event)">Create</button>
+            </form>
+        </div>`
+    )
+    e.preventDefault();
 }
 
 function addMovie( e ){
@@ -162,6 +175,7 @@ function addMovie( e ){
         Image: document.forms.my["image"].value
     };
 
+    // Add movie API call
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
@@ -174,82 +188,24 @@ function addMovie( e ){
             console.log( errorThrown );
         }
     });
-
     e.preventDefault();
+
+    // Reload/populate carousel
     queueCarousel();
-}
-
-function updateMovie( e ){
-    var dict = {
-        MovieId : parseInt(document.forms.myUpdateForm.MovieId.value),
-        Title : document.forms.myUpdateForm.Title.value,
-        Director: document.forms.myUpdateForm.Director.value,
-        Genre: document.forms.myUpdateForm.Genre.value,
-        Image: document.forms.myUpdateForm.Image.value
-    };
-
-    $.ajax({
-        url: 'https://localhost:44325/api/movie' ,
-        dataType: 'json',
-        type: 'put',
-        contentType: 'application/json',
-        data: JSON.stringify(dict),
-        success: function( data, textStatus, jQxhr ){
-        },
-        error: function( jqXhr, textStatus, errorThrown ){
-            console.log( errorThrown );
-        }
-    });
-
-    e.preventDefault();
-}
-
-function deleteMovie(id){
-    $.ajax({
-        url: 'https://localhost:44325/api/movie/' + id,
-        dataType: 'json',
-        type: 'delete',
-        contentType: 'application/json',
-        success: function( data, textStatus, jQxhr ){
-        },
-        error: function( jqXhr, textStatus, errorThrown ){
-            console.log( errorThrown );
-        }
-    });
-}
-
-function homeClick(e){
-    $("#response").empty()
-    queueCarousel();
-    e.preventDefault();
-}
-
-function newMovie(e){
-    $("#response").empty();
-    $("#response").append(
-        `<div><form name="my">
-        <input type="text" name="title" placeholder="Title" />
-        <input type="text" name="director" placeholder="Director" />
-        <input type="text" name="genre" placeholder="Genre" />
-        <input type="url" name="image" placeholder="Image URL" />
-        
-        <button type="submit" onclick="addMovie(event)">Create</button>
-    </form>
-</div>`
-    )
-    e.preventDefault();
 }
 
 function getMovieToEdit(id){
     $.ajax({
-        url: 'https://localhost:44325/api/movie/' + id,
+        url: `https://localhost:44325/api/movie/${id}`,
         dataType: 'json',
         type: 'get',
         contentType: 'application/json',
         success: function( data, textStatus, jQxhr ){
             console.log(data);
             var image = data.image;
-            if(image == null){image = "./images/default.png"};
+            if(image == null){
+                image = "./images/default.png"
+            };
             $("#response").empty();
             $("#response").html(
                 `<div>
@@ -270,12 +226,47 @@ function getMovieToEdit(id){
         }
     });
 }
+
+function updateMovie( e ){
+    var dict = {
+        MovieId : parseInt(document.forms.myUpdateForm.MovieId.value),
+        Title : document.forms.myUpdateForm.Title.value,
+        Director: document.forms.myUpdateForm.Director.value,
+        Genre: document.forms.myUpdateForm.Genre.value,
+        Image: document.forms.myUpdateForm.Image.value
+    };
+    
+    // Put movie API call
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'put',
+        contentType: 'application/json',
+        data: JSON.stringify(dict),
+        success: function( data, textStatus, jQxhr ){
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+    e.preventDefault();
+
+    // Reload/populate carousel
+    queueCarousel();
+}
+
+function homeClick(e){
+    $("#response").empty()
+    queueCarousel();
+    e.preventDefault();
+}
+
 function filterMovieBy(attribute){
     $("#response").empty();
     $("#response").append(
         `<div>
             <form name="Search">
-                <input type="text" name="search" placeholder="${attribute}" />
+                <input type="text" name="search" placeholder="Search within ${attribute}" />
                 
                 <button class="btn-primary" onclick="processSearch('${attribute}', event)" type="submit">search</button>
             </form>
@@ -284,15 +275,16 @@ function filterMovieBy(attribute){
 }
 
 function processSearch(attribute, event){
+    // Get All Movies API call
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
         type: 'get',
         contentType: 'application/json',
         success: function( data, textStatus, jQxhr ){
-            let searchValue = document.forms.Search.search.value;
+            let searchValue = document.forms.Search.search.value.toLowerCase();
             let searchResults = data.filter(function(el){
-            if(el[`${attribute}`] == searchValue){
+            if(el[`${attribute.toLowerCase()}`].toLowerCase().includes(searchValue)){
                 return true;  
             }
             else{
@@ -306,23 +298,24 @@ function processSearch(attribute, event){
             // Load table sketelon
             $("#response").html(
                 `<table class="tableResponse" class="table-striped table-primary table-hover" id ="allMoviesTable" >
-                <tr>
-                    <th></th>
-                    <th>Title</th>
-                    <th>Action</th>
-                </tr>`
+                    <h5>Results for '${searchValue}' within ${attribute}:</h5>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Action</th>
+                    </tr>`
             )
             $.each(searchResults, function(key, value){
                 $("#allMoviesTable").append(
                     `<tr class="table-striped table-dark table-hover">
-                        <td><image src="${value.image}" onerror="this.src='./images/default.png'" style="width: 50px"></td>
+                        <td><image src="${value.image}" class="tableImage" onerror="this.src='./images/default.png'"></td>
                         <td>${value.title}</td>
                         <td>
                             <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
                             <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
                         </td>
                     </tr>
-                    </table>`
+                </table>`
                 );
             });
         },
@@ -332,6 +325,8 @@ function processSearch(attribute, event){
     });
     event.preventDefault();
 }
+
+// Navbar items
 
 $('.dropdown-item').on('click', function(){
     $('.navbar-collapse').collapse('hide');
