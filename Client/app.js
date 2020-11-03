@@ -84,9 +84,13 @@ function viewAllMovies(e) {
             $("#response").html(
                 `<table class="tableResponse" class="table-striped table-primary table-hover" id ="allMoviesTable" >
                     <tr>
-                        <th></th>
-                        <th>Title</th>
-                        <th>Action</th>
+                    </tr>
+                    <tr>
+                    <th>Title</th>
+                    </tr>
+                    <th>Director</th>
+                    <tr>
+                    <th>Genre</th>
                     </tr>`
             )
 
@@ -168,15 +172,15 @@ function newMovie(e){
                 <input type="text" name="genre" placeholder="Genre" />
                 </div>
                 <div class="form-group">
-                <input type="url" id="movieurl" name="image" placeholder="Image URL" onchange="updateImage(event)"/>
+                <input type="url" id="movieurl" name="image" placeholder="Image URL" onchange="addImage(event)"/>
                 </div>
                 <div class="form-group">                
-                <button type="submit" class="btn-primary" onclick="addMovie(event)">Create</button>
+                <button type="submit" class="btn-primary" onclick="addMovie(event)">Add Movie</button>
                 </div>
             </div>
                 <div class="col-md-6">
                 <div class="form-group">
-                <img  id="movieimg" src="./images/default.png"  width="75px" >
+                <img  id="movieimg" src="./images/default.png"  width="125px" onerror="this.src='./images/default.png'">
                 </div>
             </div>
             </form>
@@ -227,17 +231,35 @@ function getMovieToEdit(id){
             };
             $("#response").empty();
             $("#response").html(
-                `<div>
-                    <form id="myUpdateForm">
-                        <input type="hidden" name="MovieId" value="${id}">
-                        <input type="text" name="Title" value="${data.title}" />
-                        <input type="text" name="Director" value="${data.director}" />
-                        <input type="text" name="Genre" value="${data.genre}" />
-                        <input type="text" name="Image" value="${data.image}" />
-                        
-                        <button type="submit" onclick="updateMovie(event)">Update</button>
-                    </form>
-                </div>`
+                `<div class="movie-form"><form name="myUpdateForm">
+        <div class ="row">
+            <h4>Update Movie Details</h4>
+            <div class="col-md-6">
+            <div class="form-group">
+                <input type="hidden" name="MovieId" value="${id}">
+                <input type="text" name="title" value="${data.title}" />
+                </div>
+                <div class="form-group">
+                <input type="text" name="director" value="${data.director}" />
+                </div>
+                <div class="form-group">
+                <input type="text" name="genre" value="${data.genre}" />
+                </div>
+                <div class="form-group">
+                <input type="url" id="editmovieurl" name="image" value="${data.image}" onchange="updateImage(event)"/>
+                </div>
+                <div class="form-group">                
+                <button type="submit" class="btn-primary" onclick="addMovie(event)">Update Movie</button>
+                </div>
+            </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                <img  id="editmovieimg" src="${data.image}"  width="125px" onerror="this.src='./images/default.png'">
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>`
             )
         },
         error: function( jqXhr, textStatus, errorThrown ){
@@ -355,7 +377,13 @@ $('.nav-link').not("#navdrop").on('click', function(){
     $('.navbar-collapse').collapse('hide');
 });
 
-function updateImage(){
+//Displays Image in Add Image
+function addImage(){
     let newImage = document.forms.my.image.value;
         $("#movieimg").attr("src", newImage);
+}
+
+function updateImage(){
+    let newImage = document.forms.myUpdateForm.image.value;
+        $("#editmovieimg").attr("src", newImage);
 }
