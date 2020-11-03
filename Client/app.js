@@ -82,30 +82,27 @@ function viewAllMovies(e) {
             
             // Load table skeleton
             $("#response").html(
-                `<table class="tableResponse" class="table-striped table-primary table-hover" id ="allMoviesTable" >
-                    <tr>
-                    </tr>
-                    <tr>
-                    <th>Title</th>
-                    </tr>
-                    <th>Director</th>
-                    <tr>
-                    <th>Genre</th>
-                    </tr>`
-            )
-
-            // Populate table items
+                `<table class="table-responsive-lg" id ="allMoviesTable" max-width="80%">
+                    <tr>`
+            );
             $.each(data, function(key, value){
                 $("#allMoviesTable").append(
-                    `   <tr><td><image class="tableImage" src="${value.image}" onerror="this.src='./images/default.png'"></td>
-                        <td>${value.title}</td>
-                        <td>
-                            <button class="details" onclick="getSingleMovie(${value.movieId})">Details</button>
-                            <button class="edit" onclick="getMovieToEdit(${value.movieId})">Edit</button>
-                        </td></tr>
-                </table>`
+                    `<td onclick="getMovieToEdit(${value.movieId})">${value.title}</td>`
                 );
             });
+            $("#allMoviesTable").append(
+                `</tr>
+                <tr>`
+            );
+            $.each(data, function(key, value){
+                $("#allMoviesTable").append(
+                    `<td><image class="tableImage2" src="${value.image}" onerror="this.src='./images/default.png'" width="100px" onclick="getMovieToEdit(${value.movieId})"></td>`
+                );
+            });
+            $("#allMoviesTable").append(
+                `</tr></table>`
+            );
+            
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
