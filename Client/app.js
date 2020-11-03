@@ -154,14 +154,33 @@ function getSingleMovie(id){
 function newMovie(e){
     $("#response").empty();
     $("#response").append(
-        `<div><form name="my">
+        `<div class="movie-form"><form name="my">
+        <div class ="row">
+            <h4>Add a Movie to the Database</h4>
+            <div class="col-md-6">
+            <div class="form-group">
                 <input type="text" name="title" placeholder="Title" />
+                </div>
+                <div class="form-group">
                 <input type="text" name="director" placeholder="Director" />
+                </div>
+                <div class="form-group">
                 <input type="text" name="genre" placeholder="Genre" />
-                <input type="url" name="image" placeholder="Image URL" />
-                
-                <button type="submit" onclick="addMovie(event)">Create</button>
+                </div>
+                <div class="form-group">
+                <input type="url" id="movieurl" name="image" placeholder="Image URL" onchange="updateImage(event)"/>
+                </div>
+                <div class="form-group">                
+                <button type="submit" class="btn-primary" onclick="addMovie(event)">Create</button>
+                </div>
+            </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                <img  id="movieimg" src="./images/default.png"  width="75px" >
+                </div>
+            </div>
             </form>
+        </div>
         </div>`
     )
     e.preventDefault();
@@ -335,3 +354,8 @@ $('.dropdown-item').on('click', function(){
 $('.nav-link').not("#navdrop").on('click', function(){
     $('.navbar-collapse').collapse('hide');
 });
+
+function updateImage(){
+    let newImage = document.forms.my.image.value;
+        $("#movieimg").attr("src", newImage);
+}

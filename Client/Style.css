@@ -47,7 +47,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    padding-bottom: 50px;
+    padding-bottom: 25px;
 }
 #response {
     margin-left: auto;
@@ -59,4 +59,57 @@ body {
 }
 .tableImage {
     width: 50px;
+}
+
+.movie-form{
+    background: #fff;
+    margin-top: 0%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    margin-right: -50%;
+    width: 80%;
+}
+.movie-form .form-control{
+    border-radius:1rem;
+}
+.contact-image{
+    text-align: center;
+}
+.contact-image img{
+    border-radius: 6rem;
+    width: 11%;
+    margin-top: -3%;
+    transform: rotate(29deg);
+}
+.movie-form form{
+    padding: 14%;
+}
+.movie-form form .row{
+    margin-bottom: -7%;
+}
+.movie-form h4{
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: #0062cc;
+}
+.movie-form .btnContact {
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    background: #dc3545;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+.btnContactSubmit
+{
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
 }
